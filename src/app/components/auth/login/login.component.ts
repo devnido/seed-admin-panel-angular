@@ -6,8 +6,6 @@ import Swal from 'sweetalert2';
 import { User } from 'src/app/models/user.model';
 import { Subscription } from 'rxjs';
 
-
-
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -22,12 +20,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     constructor(private router: Router, private authApiService: AuthApiService) { }
 
     ngOnInit(): void {
-
         this.getRemember();
     }
 
     ngOnDestroy(): void {
-
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
@@ -69,9 +65,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     private setRemenber(remember: boolean, email: string) {
-
-        console.log('remember', remember);
-        console.log('email', email);
 
         if (remember) {
             localStorage.setItem('userEmail', email);

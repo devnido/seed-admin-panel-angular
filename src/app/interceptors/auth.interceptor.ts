@@ -21,9 +21,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
             const jwt = this.authApiService.jwt;
 
-            console.log('jwt', jwt);
-
-
             let newReq;
 
             if (jwt) {

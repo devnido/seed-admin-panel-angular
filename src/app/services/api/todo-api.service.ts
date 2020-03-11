@@ -47,9 +47,6 @@ export class TodoApiService {
             .pipe(
                 map((resp: any) => {
 
-                    console.log(resp.content);
-
-
                     return resp.content;
                 })
             );

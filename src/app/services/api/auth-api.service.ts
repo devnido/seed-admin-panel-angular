@@ -32,8 +32,6 @@ export class AuthApiService {
             .pipe(
                 map((resp: any) => {
 
-                    console.log(resp);
-
 
                     if (resp.ok) {
 
@@ -55,9 +53,6 @@ export class AuthApiService {
         return this.http.post(url, user, { headers })
             .pipe(
                 map((resp: any) => {
-
-                    console.log(resp);
-
 
                     if (resp.ok) {
 

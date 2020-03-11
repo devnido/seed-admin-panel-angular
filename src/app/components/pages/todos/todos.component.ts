@@ -60,9 +60,6 @@ export class TodosComponent implements OnInit, OnDestroy {
         const subscription = this.todoApiService.getTodos(this.page)
             .subscribe((resp: any) => {
 
-                console.log(resp);
-
-
                 this.todos = resp.todos;
                 this.totalTodos = resp.total;
                 this.nextPage = resp.nextPage;
