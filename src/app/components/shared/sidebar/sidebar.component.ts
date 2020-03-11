@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SidebarUiService } from '../../services/ui/sidebar-ui.service';
-import { AuthApiService } from '../../services/api/auth-api.service';
-import { User } from '../../models/user.model';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user.model';
+import { SidebarUiService } from 'src/app/services/ui/sidebar-ui.service';
+import { AuthApiService } from 'src/app/services/api/auth-api.service';
 
 @Component({
     selector: 'app-sidebar',

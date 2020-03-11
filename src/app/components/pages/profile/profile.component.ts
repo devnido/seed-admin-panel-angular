@@ -1,27 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from '../../models/user.model';
-import { AuthApiService } from '../../services/api/auth-api.service';
-import { ProfileApiService } from '../../services/api/profile-api.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { User } from 'src/app/models/user.model';
+import { AuthApiService } from 'src/app/services/api/auth-api.service';
+import { ProfileApiService } from 'src/app/services/api/profile-api.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
     styles: []
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
 
     user: User = new User();
 
     currentPassword: string;
     newPassword: string;
     confirmNewPassword: string;
+    subscriptions: Subscription[] = [];
 
     constructor(private authService: AuthApiService, private profileService: ProfileApiService) { }
 
     ngOnInit(): void {
         this.user = this.authService.loggedUser;
+    }
+    ngOnDestroy(): void {
+        this.subscriptions.map(s => s.unsubscribe());
     }
 
     saveProfile(form: NgForm) {
@@ -35,7 +40,7 @@ export class ProfileComponent implements OnInit {
             return;
         }
 
-        this.profileService.changeUserInfo(this.user._id, form.value.name)
+        const subscription = this.profileService.changeUserInfo(this.user._id, form.value.name)
             .subscribe((user: User) => {
                 if (user) {
 
@@ -62,6 +67,8 @@ export class ProfileComponent implements OnInit {
 
             });
 
+        this.subscriptions.push(subscription);
+
     }
 
     updatePassword(form: NgForm) {
@@ -79,7 +86,7 @@ export class ProfileComponent implements OnInit {
         this.newPassword = form.value.newPassword;
         this.confirmNewPassword = form.value.confirmNewPassword;
 
-        this.profileService.changePassword(this.user._id, this.currentPassword, this.newPassword, this.confirmNewPassword)
+        const subscription = this.profileService.changePassword(this.user._id, this.currentPassword, this.newPassword, this.confirmNewPassword)
             .subscribe((resp: boolean) => {
                 if (resp) {
 
@@ -106,6 +113,8 @@ export class ProfileComponent implements OnInit {
                 }
 
             });
+
+        this.subscriptions.push(subscription);
 
     }
 

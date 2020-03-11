@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { AuthApiService } from '../../services/api/auth-api.service';
 import Swal from 'sweetalert2';
+import { AuthApiService } from 'src/app/services/api/auth-api.service';
+import { Subscription } from 'rxjs';
 
 
 
@@ -12,16 +13,19 @@ import Swal from 'sweetalert2';
     templateUrl: './forgot.component.html',
     styles: []
 })
-export class ForgotComponent implements OnInit {
+export class ForgotComponent implements OnInit, OnDestroy {
 
-
+    subscription: Subscription;
     email: string;
 
     constructor(private router: Router, private authApiService: AuthApiService) { }
 
     ngOnInit(): void {
 
+    }
 
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 
     forgot(form: NgForm) {
@@ -32,7 +36,7 @@ export class ForgotComponent implements OnInit {
 
         const email = form.value.email;
 
-        this.authApiService.forgot(email)
+        this.subscription = this.authApiService.forgot(email)
             .subscribe((resp: boolean) => {
                 if (resp) {
 
@@ -55,7 +59,8 @@ export class ForgotComponent implements OnInit {
                 }
 
             });
-
     }
+
+
 
 }

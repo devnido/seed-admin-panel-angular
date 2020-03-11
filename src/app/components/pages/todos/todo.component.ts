@@ -1,20 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { Todo } from '../../models/todo.model';
-import { TodoApiService } from '../../services/api/todo-api.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
+import { Todo } from 'src/app/models/todo.model';
+import { TodoApiService } from 'src/app/services/api/todo-api.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-todo',
     templateUrl: './todo.component.html',
     styles: []
 })
-export class TodoComponent implements OnInit {
+export class TodoComponent implements OnInit, OnDestroy {
 
     todo: Todo = new Todo();
     modo: string = '';
     loading: boolean = false;
+    subscriptions: Subscription[] = [];
 
     constructor(private todoApiService: TodoApiService, private router: Router, private activatedRoute: ActivatedRoute) {
 
@@ -31,9 +33,14 @@ export class TodoComponent implements OnInit {
 
     }
 
+    ngOnDestroy(): void {
+
+        this.subscriptions.map(s => s.unsubscribe());
+    }
+
     getTodo(id: string) {
         this.loading = true;
-        this.todoApiService.getTodo(id)
+        const subscription = this.todoApiService.getTodo(id)
             .subscribe(resp => {
 
                 this.loading = false;
@@ -48,6 +55,8 @@ export class TodoComponent implements OnInit {
                 }
 
             });
+
+        this.subscriptions.push(subscription);
     }
 
     saveTodo(f: NgForm) {
@@ -59,7 +68,7 @@ export class TodoComponent implements OnInit {
         if (this.modo === 'add') {
 
             this.loading = true;
-            this.todoApiService.addTodo(this.todo)
+            const subscription = this.todoApiService.addTodo(this.todo)
                 .subscribe((resp) => {
 
 
@@ -79,10 +88,11 @@ export class TodoComponent implements OnInit {
                     }
 
                 });
+            this.subscriptions.push(subscription);
 
         } else {
             this.loading = true;
-            this.todoApiService.updateTodo(this.todo)
+            const subscription = this.todoApiService.updateTodo(this.todo)
                 .subscribe((resp: any) => {
 
                     this.todo = resp.todo;
@@ -101,6 +111,8 @@ export class TodoComponent implements OnInit {
                     }
 
                 });
+
+            this.subscriptions.push(subscription);
         }
 
     }

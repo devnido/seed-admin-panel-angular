@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+
 
 
 const routes: Routes = [
@@ -8,10 +9,10 @@ const routes: Routes = [
         path: 'login', redirectTo: '/auth/login'
     },
     {
-        path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+        path: 'auth', loadChildren: () => import('./components/auth/auth.module').then(m => m.AuthModule)
     },
     {
-        path: '', loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
+        path: '', loadChildren: () => import('./components/pages/pages.module').then(m => m.PagesModule)
     },
 
     {

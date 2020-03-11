@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { TodoComponent } from './todos/todo.component';
 import { TodosComponent } from './todos/todos.component';
 import { SettingsComponent } from './settings/settings.component';
-import { DateToLocalPipe } from '../pipes/date-to-local.pipe';
+import { DateToLocalPipe } from 'src/app/pipes/date-to-local.pipe';
 
 
 

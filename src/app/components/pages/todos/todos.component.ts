@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Todo } from '../../models/todo.model';
-import { TodoApiService } from '../../services/api/todo-api.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import Swal from 'sweetalert2';
+import { Todo } from 'src/app/models/todo.model';
+import { TodoApiService } from 'src/app/services/api/todo-api.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-todos',
     templateUrl: './todos.component.html',
     styles: []
 })
-export class TodosComponent implements OnInit {
+export class TodosComponent implements OnInit, OnDestroy {
 
     todos: Todo[] = [];
     totalTodos: number = 0;
@@ -16,11 +17,15 @@ export class TodosComponent implements OnInit {
     nextPage: number = 1;
     loading: boolean = true;
     loadingById: string = '';
+    subscriptions: Subscription[] = [];
 
     constructor(private todoApiService: TodoApiService) { }
 
     ngOnInit(): void {
         this.loadTodos();
+    }
+    ngOnDestroy(): void {
+        this.subscriptions.map(s => s.unsubscribe());
     }
 
     searchTodos(q: string) {
@@ -31,7 +36,7 @@ export class TodosComponent implements OnInit {
 
         this.loading = true;
 
-        this.todoApiService.searchTodos(q)
+        const subscription = this.todoApiService.searchTodos(q)
             .subscribe((resp: any) => {
                 this.todos = resp.todos;
                 this.totalTodos = resp.total;
@@ -45,13 +50,14 @@ export class TodosComponent implements OnInit {
                 }
 
             });
+        this.subscriptions.push(subscription);
     }
 
     loadTodos() {
 
         this.loading = true;
 
-        this.todoApiService.getTodos(this.page)
+        const subscription = this.todoApiService.getTodos(this.page)
             .subscribe((resp: any) => {
 
                 console.log(resp);
@@ -71,6 +77,7 @@ export class TodosComponent implements OnInit {
                 }
 
             });
+        this.subscriptions.push(subscription);
     }
 
     deleteTodo(todo: Todo) {
@@ -88,7 +95,7 @@ export class TodosComponent implements OnInit {
 
             if (result.value) {
 
-                this.todoApiService.deleteTodo(todo._id)
+                const subscription = this.todoApiService.deleteTodo(todo._id)
                     .subscribe((resp: any) => {
 
                         this.page = 1;
@@ -109,6 +116,7 @@ export class TodosComponent implements OnInit {
                         }
 
                     });
+                this.subscriptions.push(subscription);
             }
         });
 
@@ -123,7 +131,7 @@ export class TodosComponent implements OnInit {
         }
 
         this.loadingById = todo._id;
-        this.todoApiService.updateTodo(todo)
+        const subscription = this.todoApiService.updateTodo(todo)
             .subscribe((resp: any) => {
 
                 const indexCurrentTodo = this.todos.findIndex(t => t._id === resp.todo._id);
@@ -144,6 +152,7 @@ export class TodosComponent implements OnInit {
                 }
 
             });
+        this.subscriptions.push(subscription);
 
     }
 

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { User } from '../../models/user.model';
 import { AuthApiService } from 'src/app/services/api/auth-api.service';
 import Swal from 'sweetalert2';
+import { User } from 'src/app/models/user.model';
+import { Subscription } from 'rxjs';
 
 
 
@@ -12,16 +13,21 @@ import Swal from 'sweetalert2';
     templateUrl: './login.component.html',
     styles: []
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
     email: string;
     rememberMe: boolean = false;
+    subscription: Subscription;
 
     constructor(private router: Router, private authApiService: AuthApiService) { }
 
     ngOnInit(): void {
 
         this.getRemember();
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 
     login(form: NgForm) {
@@ -36,7 +42,7 @@ export class LoginComponent implements OnInit {
 
         this.rememberMe = form.value.rememberMe;
 
-        this.authApiService.login(user)
+        this.subscription = this.authApiService.login(user)
             .subscribe((resp: boolean) => {
                 if (resp) {
 

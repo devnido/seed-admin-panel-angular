@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { User } from '../../models/user.model';
 import Swal from 'sweetalert2';
-import { AuthApiService } from '../../services/api/auth-api.service';
 import { Router } from '@angular/router';
+import { AuthApiService } from 'src/app/services/api/auth-api.service';
+import { User } from 'src/app/models/user.model';
+import { Subscription } from 'rxjs';
 
 
 
@@ -12,19 +13,23 @@ import { Router } from '@angular/router';
     templateUrl: './register.component.html',
     styles: []
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
     email: string;
     name: string;
     password: string;
     confirmPassword: string;
     terms: boolean = false;
+    subscription: Subscription;
 
     constructor(private router: Router, private authApiService: AuthApiService) { }
 
     ngOnInit(): void {
 
+    }
 
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 
     register(form: NgForm) {
@@ -52,7 +57,7 @@ export class RegisterComponent implements OnInit {
         user.confirmPassword = form.value.password;
         user.password = form.value.password;
 
-        this.authApiService.register(user)
+        this.subscription = this.authApiService.register(user)
             .subscribe((resp: boolean) => {
                 if (resp) {
 
@@ -72,11 +77,6 @@ export class RegisterComponent implements OnInit {
                 }
 
             });
-
-
-
-
-
 
     }
 

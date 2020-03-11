@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { AuthApiService } from '../../services/api/auth-api.service';
+import { AuthApiService } from 'src/app/services/api/auth-api.service';
+import { Subscription } from 'rxjs';
 
 
 
@@ -11,11 +12,12 @@ import { AuthApiService } from '../../services/api/auth-api.service';
     templateUrl: './recovery.component.html',
     styles: []
 })
-export class RecoveryComponent implements OnInit {
+export class RecoveryComponent implements OnInit, OnDestroy {
 
     changeToken = '';
     password: string = '';
     confirmPassword: string = '';
+    subscription: Subscription;
 
     constructor(private router: Router, private activatedRoute: ActivatedRoute, private authApiService: AuthApiService) {
 
@@ -32,6 +34,10 @@ export class RecoveryComponent implements OnInit {
 
     }
 
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+    }
+
     recovery(form: NgForm) {
 
         if (form.invalid) {
@@ -46,7 +52,7 @@ export class RecoveryComponent implements OnInit {
         this.password = form.value.password;
         this.confirmPassword = form.value.confirmPassword;
 
-        this.authApiService.recovery(this.password, this.confirmPassword, this.changeToken)
+        this.subscription = this.authApiService.recovery(this.password, this.confirmPassword, this.changeToken)
             .subscribe((resp: boolean) => {
                 if (resp) {
 
