@@ -1,0 +1,67 @@
+<div class="row animated fadeIn">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input #inputSearch (keyup)="searchTodos(inputSearch.value)" type="text" class="form-control" placeholder="Buscar tarea">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn">
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div *ngIf="loading" class="row">
+                    <div class="col-md-12 text-center">
+                        <i class="fa fa-spin fa-spinner fa-5x"></i>
+                    </div>
+                </div>
+
+
+
+                <div class="text-right">
+                    <button [routerLink]="['/tarea','add']" class="btn-rounded btn-primary pointer"><i class="mdi mdi-plus"></i> Agregar Tarea</button>
+                </div>
+
+                <h3 class="card-title">Tareas <span class="badge badge-danger">{{ totalTodos }}</span></h3>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let todo of todos">
+                            <td>{{todo.name}}</td>
+                            <td>{{todo.status}}</td>
+                            <td>
+                                <button [routerLink]="['/tarea',todo._id]" class=" btn btn-primary mr-2">
+                                    <i class="fa fa-edit "></i>
+                                </button>
+                                <button (click)="deleteTodo(todo)" class="btn btn-danger">
+                                    <i class="fa fa-trash-o "></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+                <button *ngIf="page > 1" (click)="getTodosPaginated(-1)" class="btn btn-secondary mr-2">
+                        Anteriores
+                </button>
+
+                <button *ngIf="nextPage < 1" (click)="getTodosPaginated(1)" class="btn btn-secondary">
+                    Siguientes
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>

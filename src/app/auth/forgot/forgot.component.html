@@ -1,0 +1,33 @@
+<section id="wrapper">
+    <div class="login-register" style="background-image:url(../assets/images/background/login-register.jpg);">
+
+        <div class="login-box card">
+            <div class="card-body">
+
+                <h3 class="card-title text-center mt-5">Recuperar Contraseña</h3>
+
+                <form ngNativeValidate #f="ngForm" class="form-horizontal form-material" (ngSubmit)="forgot(f)">
+
+                    <div class="form-group m-t-40">
+                        <div class="col-xs-12">
+                            <input [ngModel]="email" name="email" class="form-control" type="email" required placeholder="Email del usuario">
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center m-t-20">
+                        <div class="col-xs-12">
+                            <button class="btn btn-info btn-block text-uppercase btn-rounded" type="submit">Solicitar Contraseña</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-b-0">
+                        <div class="col-sm-12 text-center">
+                            <a routerLink="/login" class="text-primary m-l-5"><i class="fa fa-key m-r-5"></i> <b>Inicia Sesión Aquí</b></a>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,87 @@
+<div class="row animated fadeIn">
+    <div class="col-md-6">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Perfil de Usuario</h4>
+                    <h6 class="card-subtitle">Actualiza tus datos</h6>
+                    <form ngNativeValidate #f="ngForm" (ngSubmit)="saveProfile(f)" class="form p-t-20">
+                        <div class="form-group">
+                            <label for="exampleInputuname">Nombre de Usuario</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-user"></i></div>
+                                <input [ngModel]="user.name" name="name" type="text" class="form-control" placeholder="Nombre de usuario" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Correo de Usuario</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-email"></i></div>
+                                <input [ngModel]="user.email" name="email" type="email" class="form-control" placeholder="Correo del usuario" disabled required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> <i class="fa fa-save"></i> Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="false" class="col-md-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h4 class="card-title">Fotografía del Usuario</h4>
+                    <h6 class="card-subtitle">Actualiza tu foto personal</h6>
+                    <!-- 
+                <img *ngIf="imagenTemp" [src]="imagenTemp" class="w150" alt="">
+                <img *ngIf="!imagenTemp" [src]="usuario.img | imagen" class="w150" alt="">
+                <br>
+                <br>
+                <input (change)="seleccionImagen($event.target.files[0])" type="file" name="" id="">
+                <br>
+                <br>
+                <button (click)="cambiarImagen()" [disabled]="!imagenSubir" type="submit" class="btn btn-success  btn-block waves-effect waves-light m-r-10"> <i class="fa fa-save"></i> Subir</button>
+                -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Cambiar Contraseña</h4>
+                <h6 class="card-subtitle">Actualiza tu contraseña</h6>
+
+                <form ngNativeValidate #fp="ngForm" (ngSubmit)="updatePassword(fp)" class="form p-t-20">
+                    <div class="form-group">
+                        <label>Contraseña Actual</label>
+                        <div class="input-group">
+                            <div class="input-group-addon bg-danger text-white"><i class="mdi mdi-key"></i></div>
+                            <input [ngModel]="currentPassword" name="currentPassword" type="password" class="form-control" placeholder="Contraseña Actual" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Nueva Contraseña</label>
+                        <div class="input-group">
+                            <div class="input-group-addon bg-primary text-white"><i class="mdi mdi-key-variant"></i></div>
+                            <input [ngModel]="newPassword" name="newPassword" type="password" class="form-control" placeholder="Nueva Contraseña" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirmar Nueva Contraseña</label>
+                        <div class="input-group">
+                            <div class="input-group-addon bg-primary text-white"><i class="mdi mdi-key-variant"></i></div>
+                            <input [ngModel]="confirmNewPassword" name="confirmNewPassword" type="password" class="form-control" placeholder="Confirmar Nueva Contraseña" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-danger  btn-block waves-effect waves-light m-r-10"> <i class="fa fa-save"></i> Actualizar</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
