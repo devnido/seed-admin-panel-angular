@@ -7,10 +7,6 @@
                         <h3>¿Que es esto?</h3>
                         <p>Es demo de un panel de control para utilizar como base para proyectos en angular. Está desarrollado en <b>Angular 9.</b></p>
                         <p>A modo de ejemplo tiene un CRUD de tareas y ademas permite la modificación de perfil del usuario loguaedo.</p>
-                        <h3>¿Como funciona?</h3>
-                        <p>Consume un API rest de recursos la cual restringe el acceso mediante un json web token que se obtiene desde un servidor de autenticación. </p>
-                        <p>El json web token tiene un perdiodo de duración, una vez terminado este periodo es necesario renovar el json web token en el servidor de autenticación utilizando un refresh token.</p>
-                        <p>Ambos tokens son proporcionados por el servidor de autenticación cuando un usuario ingresa al sistema mediante el formulario de login.</p>
                     </div>
                 </div>
             </div>
@@ -32,20 +28,6 @@
                             <li>Mostrar hora y fecha de acuerdo a la región configurada en el cliente.</li>
                         </ul>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <div class="col-md-6">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Esquema de funcionamiento</h3>
-                        <p>La siguiente imagen muestra el flujo de la interacción que se genera entre las partes que componen el sistema completo (frontend y backend).</p>
-                        <img class="w100p" src="../../../assets/images/refresh-token-esquema.png" alt="">
                     </div>
                 </div>
             </div>
@@ -75,6 +57,26 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>¿Como funciona?</h3>
+                        <p>Consume un API rest de recursos la cual restringe el acceso mediante un json web token que se obtiene desde un servidor de autenticación. </p>
+                        <p>El json web token tiene un perdiodo de duración, una vez terminado este periodo es necesario renovar el json web token en el servidor de autenticación utilizando un refresh token.</p>
+                        <p>Ambos tokens son proporcionados por el servidor de autenticación cuando un usuario ingresa al sistema mediante el formulario de login.</p>
+
+                        <h3>Esquema de funcionamiento</h3>
+                        <p>La siguiente imagen muestra el flujo de la interacción que se genera entre las partes que componen el sistema completo (frontend y backend).</p>
+                        <img class="w100p" src="../../../assets/images/refresh-token-esquema.png" alt="">
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </div>
