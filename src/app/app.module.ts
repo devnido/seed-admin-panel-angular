@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 
@@ -12,6 +12,9 @@ import { RegisterComponent } from './auth/register/register.component';
 import { ForgotComponent } from './auth/forgot/forgot.component';
 import { RecoveryComponent } from './auth/recovery/recovery.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AuthApiService } from './services/api/auth-api.service';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 @NgModule({
     declarations: [
@@ -21,6 +24,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
         ForgotComponent,
         RecoveryComponent,
         PageNotFoundComponent
+
     ],
     imports: [
         BrowserModule,
@@ -28,7 +32,21 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
         HttpClientModule,
         AppRoutingModule
     ],
-    providers: [],
-    bootstrap: [AppComponent]
+    providers: [
+        AuthApiService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ErrorInterceptor,
+            multi: true
+        }
+    ],
+    bootstrap: [
+        AppComponent
+    ]
 })
 export class AppModule { }

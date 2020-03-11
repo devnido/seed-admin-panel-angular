@@ -27,18 +27,34 @@
 
                 <h3 class="card-title">Tareas <span class="badge badge-danger">{{ totalTodos }}</span></h3>
 
-                <table class="table table-hover">
+                <table *ngIf="totalTodos" class="table table-hover">
                     <thead>
                         <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Estado</th>
-                            <th scope="col"></th>
+                            <th scope="col">Cambiar Estado</th>
+                            <th scope="col">Creación</th>
+                            <th scope="col">Modificación</th>
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let todo of todos">
-                            <td>{{todo.name}}</td>
-                            <td>{{todo.status}}</td>
+                            <td> <s *ngIf="todo.status==='realizado'"> {{todo.name}}</s> {{todo.status==='pendiente'?todo.name:''}} </td>
+                            <td> <span class="label" [ngClass]="{'label-warning':todo.status==='pendiente', 'label-primary':todo.status==='realizado' }">{{todo.status==='pendiente'?'Pendiente':'Realizado'}}</span> </td>
+                            <td>
+
+                                <div class="switch">
+                                    <label>
+                                        <input (change)="changeSwitch(todo)" type="checkbox" [checked]="todo.status === 'realizado'" [disabled]="this.loadingById===todo._id">
+                                        <span class="lever switch-col-indigo"></span>
+                                    </label>
+                                    <i *ngIf="loadingById=== todo._id" class="fa fa-spin fa-spinner"></i>
+                                </div>
+
+                            </td>
+                            <td>{{todo.createdAt | dateToLocal }}</td>
+                            <td>{{todo.updatedAt | dateToLocal }}</td>
                             <td>
                                 <button [routerLink]="['/tarea',todo._id]" class=" btn btn-primary mr-2">
                                     <i class="fa fa-edit "></i>
@@ -48,16 +64,16 @@
                                 </button>
                             </td>
                         </tr>
-
                     </tbody>
-
                 </table>
 
-                <button *ngIf="page > 1" (click)="getTodosPaginated(-1)" class="btn btn-secondary mr-2">
+                <div *ngIf="!totalTodos" class="alert alert-success">No hay tareas para mostrar.</div>
+
+                <button *ngIf="page > 1" (click)="getPrevPage()" class="btn btn-secondary mr-2">
                         Anteriores
                 </button>
 
-                <button *ngIf="nextPage < 1" (click)="getTodosPaginated(1)" class="btn btn-secondary">
+                <button *ngIf="nextPage > page" (click)="getNextPage()" class="btn btn-secondary">
                     Siguientes
                 </button>
 

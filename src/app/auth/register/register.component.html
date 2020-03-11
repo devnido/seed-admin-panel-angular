@@ -8,7 +8,7 @@
 
                 <h3 class="box-title m-t-40 m-b-0 text-center">Registrarse</h3>
 
-                <form ngNativeValidate #f="ngForm" (ngSubmit)="register(f)" class="form-horizontal form-material" id="loginform" action="index.html">
+                <form ngNativeValidate #f="ngForm" (ngSubmit)="register(f)" class="form-horizontal form-material">
 
 
                     <div class="form-group m-t-40">
@@ -23,12 +23,12 @@
                     </div>
                     <div class="form-group ">
                         <div class="col-xs-12">
-                            <input [ngModel]="password" name="password" class="form-control" type="text" required placeholder="Contraseña">
+                            <input [ngModel]="password" name="password" class="form-control" type="password" required placeholder="Contraseña">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <input [ngModel]="confirmPassword" name="confirmPassword" class="form-control" type="text" required placeholder="Confirmar Contraseña">
+                            <input [ngModel]="confirmPassword" name="confirmPassword" class="form-control" type="password" required placeholder="Confirmar Contraseña">
                         </div>
                     </div>
 

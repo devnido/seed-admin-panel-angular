@@ -1,1 +1,81 @@
-<p>welcome works!</p>
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>¿Que es esto?</h3>
+                        <p>Es demo de un panel de control para utilizar como base para proyectos en angular. Está desarrollado en <b>Angular 9.</b></p>
+                        <p>A modo de ejemplo tiene un CRUD de tareas y ademas permite la modificación de perfil del usuario loguaedo.</p>
+                        <h3>¿Como funciona?</h3>
+                        <p>Consume un API rest de recursos la cual restringe el acceso mediante un json web token que se obtiene desde un servidor de autenticación. </p>
+                        <p>El json web token tiene un perdiodo de duración, una vez terminado este periodo es necesario renovar el json web token en el servidor de autenticación utilizando un refresh token.</p>
+                        <p>Ambos tokens son proporcionados por el servidor de autenticación cuando un usuario ingresa al sistema mediante el formulario de login.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Funcionalidades del sistema</h3>
+                        <ul>
+                            <li>Registro de usuarios.</li>
+                            <li>Ingreso de usuarios.</li>
+                            <li>Recuperar contraseña mediante email.</li>
+                            <li>Modificar nombre y contraseña en el perfil de usuario.</li>
+                            <li>Agregar tareas.</li>
+                            <li>Listar tareas de forma paginada.</li>
+                            <li>Buscar tareas por nombre y estado.</li>
+                            <li>Modificar el estado de la tarea en el listado.</li>
+                            <li>Modificar el estado y el nombre de la tarea en página detalle.</li>
+                            <li>Eliminar una tarea.</li>
+                            <li>Mostrar hora y fecha de acuerdo a la región configurada en el cliente.</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Esquema de funcionamiento</h3>
+                        <p>La siguiente imagen muestra el flujo de la interacción que se genera entre las partes que componen el sistema completo (frontend y backend).</p>
+                        <img class="w100p" src="../../../assets/images/refresh-token-esquema.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Conocimiento aplicado en el desarrollo de este front-end</h3>
+                        <ul>
+                            <li>Comunicación con fuentes de datos externas (API Rest).</li>
+                            <li>Implementación de Guards para restringir acceso.</li>
+                            <li>Implementación de Lazy Loading.</li>
+                            <li>Implementación de Pipes.</li>
+                            <li>Utilización de servicios.</li>
+                            <li>Utilización de Local Storage para almacenar datos.</li>
+                            <li>Agrupación de componentes en módulos.</li>
+                            <li>Implementacion de componentes compartidos entre módulos.</li>
+                            <li>Implementación de rutas padres e hijas.</li>
+                            <li>Utilización programación reactiva mediante rxjs para manejar solicitudes al servidor.</li>
+                            <li>Validaciónes nativas de formularios HTML.</li>
+                            <li>Utilización de servicios para comunicar componentes.</li>
+                            <li>Implementación de Interceptors para manejar la renovación del JWT de forma automatica.</li>
+                            <li>Implementación de Interceptors para manejar los errores de las solicitudes al servidor.</li>
+                            <li>Utilización de variables de entorno para desarrollo y producción.</li>
+                            <li>Segrecación de responsabilidades, componentes se encargan de manejar la vista y los servicios de acceder a los datos.</li>
+                            <li>Código escrito de forma limpia y ordenanda, para facilitar la lectura, la mantención y la escalabilidad del proyecto.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -15,6 +15,7 @@ export class TodosComponent implements OnInit {
     page: number = 1;
     nextPage: number = 1;
     loading: boolean = true;
+    loadingById: string = '';
 
     constructor(private todoApiService: TodoApiService) { }
 
@@ -52,6 +53,9 @@ export class TodosComponent implements OnInit {
 
         this.todoApiService.getTodos(this.page)
             .subscribe((resp: any) => {
+
+                console.log(resp);
+
 
                 this.todos = resp.todos;
                 this.totalTodos = resp.total;
@@ -110,22 +114,54 @@ export class TodosComponent implements OnInit {
 
     }
 
+    changeSwitch(todo: Todo) {
 
-    getTodosPaginated(value: number) {
-        const page = this.page + value;
-
-        if (page * 10 >= this.totalTodos) {
-            return;
+        if (todo.status === 'pendiente') {
+            todo.status = 'realizado';
+        } else {
+            todo.status = 'pendiente';
         }
 
-        if (page === 0) {
-            return;
+        this.loadingById = todo._id;
+        this.todoApiService.updateTodo(todo)
+            .subscribe((resp: any) => {
+
+                const indexCurrentTodo = this.todos.findIndex(t => t._id === resp.todo._id);
+
+                this.todos[indexCurrentTodo] = resp.todo;
+
+                // Swal.fire('Tarea actualizada', todo.name, 'success');
+
+                this.loadingById = '';
+
+            }, error => {
+
+                this.loadingById = '';
+                if (error.status === 422) {
+                    Swal.fire('Ha ocurrido un error', error.error.content.error.errors[0].msg, 'error');
+                } else {
+                    Swal.fire('Ha ocurrido un error', 'Vuelva a intentarlo mas tarde', 'error');
+                }
+
+            });
+
+    }
+
+    getPrevPage() {
+        if (this.page > 1) {
+            this.page--;
+            this.loadTodos();
         }
+        return;
+    }
 
 
-        this.page += value;
-        this.loadTodos();
-
+    getNextPage() {
+        if (this.nextPage > this.page) {
+            this.page++;
+            this.loadTodos();
+        }
+        return;
     }
 
 }

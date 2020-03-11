@@ -8,12 +8,17 @@
                 <p class="text-muted m-b-30 font-13" *ngIf="modo!=='add'"> Actualizar datos de la tarea </p>
                 <div class="row">
                     <div class="col-sm-12 col-xs-12">
+                        <div *ngIf="loading" class="row">
+                            <div class="col-md-12 text-center">
+                                <i class="fa fa-spin fa-spinner fa-3x"></i>
+                            </div>
+                        </div>
                         <form #f="ngForm" ngNativeValidate (ngSubmit)="saveTodo(f)">
 
                             <div class="form-group">
                                 <label>Nombre</label>
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-home"></i></span>
+                                    <span class="input-group-addon bg-primary text-light"><i class="fa fa-comment-o"></i></span>
                                     <input [(ngModel)]="todo.name" name="name" type="text" class="form-control" placeholder="Nombre de la tarea" required>
                                 </div>
                             </div>
@@ -22,8 +27,8 @@
                                 <label>Estado</label>
                                 <select (change)="changeStatus($event.target.value)" class="form-control" [(ngModel)]="todo.status" name="status" required>    
                                     <option  value="" selected disabled>Seleccione estado</option>                           
-                                    <option  value="pending">Pendiente</option>
-                                    <option  value="finalized">Finalizada</option>
+                                    <option  value="pendiente">Pendiente</option>
+                                    <option  value="realizado">Realizado</option>
                                 </select>
                             </div>
 

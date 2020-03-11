@@ -12,13 +12,11 @@ import { NgForm } from '@angular/forms';
 })
 export class TodoComponent implements OnInit {
 
-
     todo: Todo = new Todo();
     modo: string = '';
-    regions: any[] = [];
-    comunas: string[] = [];
+    loading: boolean = false;
 
-    constructor(private todoService: TodoApiService, private router: Router, private activatedRoute: ActivatedRoute) {
+    constructor(private todoApiService: TodoApiService, private router: Router, private activatedRoute: ActivatedRoute) {
 
         this.activatedRoute.params.subscribe(params => {
             const id = this.modo = params.id;
@@ -33,17 +31,16 @@ export class TodoComponent implements OnInit {
 
     }
 
-
-
     getTodo(id: string) {
-        this.todoService.getTodo(id)
+        this.loading = true;
+        this.todoApiService.getTodo(id)
             .subscribe(resp => {
 
-
+                this.loading = false;
                 this.todo = resp.todo;
 
             }, error => {
-
+                this.loading = false;
                 if (error.status === 422) {
                     Swal.fire('Ha ocurrido un error', error.error.content.error.errors[0].msg, 'error');
                 } else {
@@ -51,7 +48,6 @@ export class TodoComponent implements OnInit {
                 }
 
             });
-
     }
 
     saveTodo(f: NgForm) {
@@ -62,19 +58,20 @@ export class TodoComponent implements OnInit {
 
         if (this.modo === 'add') {
 
-            this.todoService.addTodo(this.todo)
+            this.loading = true;
+            this.todoApiService.addTodo(this.todo)
                 .subscribe((resp) => {
 
 
-
+                    this.loading = false;
                     this.todo = resp.todo;
 
-                    Swal.fire('Agencia agregada', this.todo.name, 'success');
+                    Swal.fire('Tarea agregada', this.todo.name, 'success');
 
-                    this.router.navigate(['/agencia', this.todo._id]);
+                    this.router.navigate(['/tarea', this.todo._id]);
 
                 }, error => {
-
+                    this.loading = false;
                     if (error.status === 422) {
                         Swal.fire('Ha ocurrido un error', error.error.content.error.errors[0].msg, 'error');
                     } else {
@@ -84,17 +81,19 @@ export class TodoComponent implements OnInit {
                 });
 
         } else {
-            this.todoService.updateTodo(this.todo)
+            this.loading = true;
+            this.todoApiService.updateTodo(this.todo)
                 .subscribe((resp: any) => {
 
                     this.todo = resp.todo;
+                    this.loading = false;
 
-                    Swal.fire('Agencia actualizada', this.todo.name, 'success');
+                    Swal.fire('Tarea actualizada', this.todo.name, 'success');
 
-                    this.router.navigate(['/agencias']);
+                    this.router.navigate(['/tareas']);
 
                 }, error => {
-
+                    this.loading = false;
                     if (error.status === 422) {
                         Swal.fire('Ha ocurrido un error', error.error.content.error.errors[0].msg, 'error');
                     } else {

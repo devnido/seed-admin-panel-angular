@@ -22,15 +22,42 @@ export class AuthApiService {
         this.loadUserFromStorage();
     }
 
-    login(user: User) {
+    register(user: User) {
 
-        const url = this.baseUrlAuth + '/login';
+        const url = this.baseUrlAuth + '/register';
 
-        const headers = this.getAutHeaders();
+        const headers = this.generateIsAuthHeader();
 
         return this.http.post(url, user, { headers })
             .pipe(
                 map((resp: any) => {
+
+                    console.log(resp);
+
+
+                    if (resp.ok) {
+
+                        return true;
+                    } else {
+                        return false;
+                    }
+                })
+            );
+    }
+
+
+    login(user: User) {
+
+        const url = this.baseUrlAuth + '/login';
+
+        const headers = this.generateIsAuthHeader();
+
+        return this.http.post(url, user, { headers })
+            .pipe(
+                map((resp: any) => {
+
+                    console.log(resp);
+
 
                     if (resp.ok) {
 
@@ -51,7 +78,7 @@ export class AuthApiService {
 
         const url = this.baseUrlAuth + '/forgot';
 
-        const headers = this.getAutHeaders();
+        const headers = this.generateIsAuthHeader();
 
         return this.http.post(url, { email }, { headers })
             .pipe(
@@ -71,7 +98,7 @@ export class AuthApiService {
 
         const url = this.baseUrlAuth + '/recovery/' + changeToken;
 
-        const headers = this.getAutHeaders();
+        const headers = this.generateIsAuthHeader();
 
         return this.http.post(url, { password, confirmPassword }, { headers })
             .pipe(
@@ -91,8 +118,8 @@ export class AuthApiService {
         const url = this.baseUrlAuth + '/refresh/' + this.loggedUser._id;
 
 
-        const headers = this.getAutHeaders()
-            .append('Authorization', this.jwt);
+        const headers = this.generateIsAuthHeader()
+            .append('authorization', this.jwt);
 
 
         return this.http.post(url, { refresh: this.refresh }, { headers })
@@ -128,8 +155,6 @@ export class AuthApiService {
         localStorage.removeItem('jwt');
         localStorage.removeItem('user');
         localStorage.removeItem('refresh');
-
-        this.router.navigate(['/login']);
     }
 
     isLoggedIn() {
@@ -181,7 +206,7 @@ export class AuthApiService {
 
     }
 
-    private getAutHeaders() {
+    private generateIsAuthHeader() {
         return new HttpHeaders().append('is-auth', 'true');
     }
 

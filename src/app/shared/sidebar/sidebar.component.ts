@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SidebarUiService } from '../../services/ui/sidebar-ui.service';
 import { AuthApiService } from '../../services/api/auth-api.service';
 import { User } from '../../models/user.model';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-sidebar',
@@ -14,7 +15,7 @@ export class SidebarComponent implements OnInit {
 
     user: User = new User();
 
-    constructor(private sideBarService: SidebarUiService, private authService: AuthApiService) { }
+    constructor(private router: Router, private sideBarService: SidebarUiService, private authService: AuthApiService) { }
 
     ngOnInit(): void {
 
@@ -25,6 +26,7 @@ export class SidebarComponent implements OnInit {
 
     logout() {
         this.authService.logout();
+        this.router.navigate(['/login']);
     }
 
 }

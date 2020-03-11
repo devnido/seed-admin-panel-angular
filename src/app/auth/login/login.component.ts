@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { User } from '../../models/user.model';
+import { AuthApiService } from 'src/app/services/api/auth-api.service';
+import Swal from 'sweetalert2';
 
 declare function init_plugins();
 
@@ -15,7 +17,7 @@ export class LoginComponent implements OnInit {
     email: string;
     rememberMe: boolean = false;
 
-    constructor(public router: Router) { }
+    constructor(private router: Router, private authApiService: AuthApiService) { }
 
     ngOnInit(): void {
 
@@ -34,6 +36,27 @@ export class LoginComponent implements OnInit {
         user.password = form.value.password;
 
         this.rememberMe = form.value.rememberMe;
+
+        this.authApiService.login(user)
+            .subscribe((resp: boolean) => {
+                if (resp) {
+
+                    this.setRemenber(this.rememberMe, user.email);
+
+                    this.router.navigate(['/bienvenido']);
+
+                } else {
+                    console.log(resp);
+                }
+
+            }, (error: any) => {
+                if (error.status === 401) {
+                    Swal.fire('Error al ingresar', 'Usuario o contraseña ingresados son incorrectos', 'error');
+                } else {
+                    Swal.fire('Ha ocurrido un error', 'Vuelva a intentarlo mas tarde', 'error');
+                }
+
+            });
 
     }
 
