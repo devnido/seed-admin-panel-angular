@@ -6,11 +6,6 @@ import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
-
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { ForgotComponent } from './auth/forgot/forgot.component';
-import { RecoveryComponent } from './auth/recovery/recovery.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthApiService } from './services/api/auth-api.service';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -19,12 +14,7 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
 @NgModule({
     declarations: [
         AppComponent,
-        LoginComponent,
-        RegisterComponent,
-        ForgotComponent,
-        RecoveryComponent,
         PageNotFoundComponent
-
     ],
     imports: [
         BrowserModule,

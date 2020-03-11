@@ -4,13 +4,13 @@ import { NgForm } from '@angular/forms';
 import { AuthApiService } from '../../services/api/auth-api.service';
 import Swal from 'sweetalert2';
 
-declare function init_plugins();
+
 
 
 @Component({
     selector: 'app-forgot',
     templateUrl: './forgot.component.html',
-    styleUrls: ['./forgot.component.css']
+    styles: []
 })
 export class ForgotComponent implements OnInit {
 
@@ -21,7 +21,7 @@ export class ForgotComponent implements OnInit {
 
     ngOnInit(): void {
 
-        init_plugins();
+
     }
 
     forgot(form: NgForm) {
@@ -40,7 +40,7 @@ export class ForgotComponent implements OnInit {
                         'Un email ha sido enviado a su correo ' + email + ' con las intrucciones para restablecer su contraseña',
                         'success');
 
-                    this.router.navigate(['/login']);
+                    this.router.navigate(['/auth']);
 
                 } else {
                     console.log(resp);

@@ -5,12 +5,12 @@ import Swal from 'sweetalert2';
 import { AuthApiService } from '../../services/api/auth-api.service';
 import { Router } from '@angular/router';
 
-declare function init_plugins();
+
 
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
-    styleUrls: ['./register.component.css']
+    styles: []
 })
 export class RegisterComponent implements OnInit {
 
@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit(): void {
 
-        init_plugins();
+
     }
 
     register(form: NgForm) {
@@ -58,7 +58,7 @@ export class RegisterComponent implements OnInit {
 
                     Swal.fire('Cuenta creada', 'Su cuenta de usuario se ha crado exitosamente', 'success');
 
-                    this.router.navigate(['/login']);
+                    this.router.navigate(['/auth']);
 
                 } else {
                     console.log(resp);

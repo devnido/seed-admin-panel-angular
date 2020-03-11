@@ -5,12 +5,11 @@ import Swal from 'sweetalert2';
 import { AuthApiService } from '../../services/api/auth-api.service';
 
 
-declare function init_plugins();
 
 @Component({
     selector: 'app-recovery',
     templateUrl: './recovery.component.html',
-    styleUrls: ['./recovery.component.css']
+    styles: []
 })
 export class RecoveryComponent implements OnInit {
 
@@ -24,13 +23,13 @@ export class RecoveryComponent implements OnInit {
             this.changeToken = params.token;
 
             if (params.token.length < 10) {
-                this.router.navigate(['/login']);
+                this.router.navigate(['/auth']);
             }
         });
     }
 
     ngOnInit(): void {
-        init_plugins();
+
     }
 
     recovery(form: NgForm) {
@@ -53,7 +52,7 @@ export class RecoveryComponent implements OnInit {
 
                     Swal.fire('Contraseña modificada', 'Su contraseña ha sido modificada exitosamente', 'success');
 
-                    this.router.navigate(['/login']);
+                    this.router.navigate(['/auth']);
 
                 } else {
                     console.log(resp);

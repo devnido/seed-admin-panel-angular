@@ -5,12 +5,12 @@ import { User } from '../../models/user.model';
 import { AuthApiService } from 'src/app/services/api/auth-api.service';
 import Swal from 'sweetalert2';
 
-declare function init_plugins();
+
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css']
+    styles: []
 })
 export class LoginComponent implements OnInit {
 
@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(): void {
 
-        init_plugins();
         this.getRemember();
     }
 

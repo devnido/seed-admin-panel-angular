@@ -1,39 +1,12 @@
-/*
-Template Name: Admin pro Admin
-Author: Wrappixel
-Email: niravjoshi87@gmail.com
-File: scss
-*/
+import { Component, OnInit } from '@angular/core';
 
 
-/*
-Template Name: Admin Pro Admin
-Author: Wrappixel
-Email: niravjoshi87@gmail.com
-File: scss
-*/
+declare function init_plugins();
 
-
-/*Theme Colors*/
-
-
-/*bootstrap Color*/
-
-
-/*Light colors*/
-
-
-/*Normal Color*/
-
-
-/*Extra Variable*/
-
-
-/*******************
-Login register and recover password Page
-******************/
-
-.login-register {
+@Component({
+    selector: 'app-auth',
+    templateUrl: './auth.component.html',
+    styles: [`.login-register {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -72,4 +45,14 @@ Login register and recover password Page
     right: 0px;
     position: absolute;
     height: 100%;
+}`]
+})
+export class AuthComponent implements OnInit {
+
+    constructor() { }
+
+    ngOnInit(): void {
+        init_plugins();
+    }
+
 }
