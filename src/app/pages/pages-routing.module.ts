@@ -6,10 +6,12 @@ import { ProfileComponent } from './profile/profile.component';
 import { TodosComponent } from './todos/todos.component';
 import { TodoComponent } from './todos/todo.component';
 import { SettingsComponent } from './settings/settings.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
     {
         path: '', component: PagesComponent,
+        canActivate: [AuthGuard],
         children: [
             {
                 path: 'bienvenido', component: WelcomeComponent, data: { titulo: 'Bienvenido' }
