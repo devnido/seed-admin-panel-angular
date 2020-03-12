@@ -6,6 +6,10 @@
 
 /* You can add global styles to this file, and also import other style files */
 
+.auth {
+    background-image: url('assets/images/background/login-register.jpg');
+}
+
 #themecolors a {
     cursor: pointer;
 }

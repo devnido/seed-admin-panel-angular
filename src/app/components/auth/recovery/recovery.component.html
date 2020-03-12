@@ -1,39 +1,31 @@
-<section id="wrapper">
-    <div class="login-register" style="background-image:url(../assets/images/background/login-register.jpg);">
+<h3 class="card-title text-center mt-5">
 
-        <div class="login-box card">
-            <div class="card-body">
+    Nueva Contraseña</h3>
 
-                <h3 class="card-title text-center mt-5">Nueva Contraseña</h3>
+<form ngNativeValidate #f="ngForm" class="form-horizontal form-material" (ngSubmit)="recovery(f)">
 
-                <form ngNativeValidate #f="ngForm" class="form-horizontal form-material" (ngSubmit)="recovery(f)">
-
-                    <div class="form-group m-t-40">
-                        <div class="col-xs-12">
-                            <input [ngModel]="password" name="password" class="form-control" type="password" required placeholder="Nueva contraseña" minlength="6">
-                        </div>
-                    </div>
-
-                    <div class="form-group m-t-40">
-                        <div class="col-xs-12">
-                            <input [ngModel]="confirmPassword" name="confirmPassword" class="form-control" type="password" required placeholder="Confirmar nueva contraseña" minlength="6">
-                        </div>
-                    </div>
-                    <re-captcha (resolved)="resolved($event)" siteKey="{{siteApiKeyCaptcha}}"></re-captcha>
-                    <div class="form-group text-center m-t-20">
-                        <div class="col-xs-12">
-                            <button class="btn btn-info btn-block text-uppercase btn-rounded" type="submit" [disabled]="loading">Cambiar Contraseña  <i class="fa fa-spin fa-spinner" *ngIf="loading"></i></button>
-                        </div>
-                    </div>
-
-                    <div class="form-group m-b-0">
-                        <div class="col-sm-12 text-center">
-                            <a routerLink="/login" class="text-primary m-l-5"><i class="fa fa-key m-r-5"></i> <b>Inicia Sesión Aquí</b></a>
-                        </div>
-                    </div>
-
-                </form>
-            </div>
+    <div class="form-group m-t-40">
+        <div class="col-xs-12">
+            <input [ngModel]="password" name="password" class="form-control" type="password" required placeholder="Nueva contraseña" minlength="6">
         </div>
     </div>
-</section>
+
+    <div class="form-group m-t-40">
+        <div class="col-xs-12">
+            <input [ngModel]="confirmPassword" name="confirmPassword" class="form-control" type="password" required placeholder="Confirmar nueva contraseña" minlength="6">
+        </div>
+    </div>
+    <re-captcha (resolved)="resolved($event)" siteKey="{{siteApiKeyCaptcha}}"></re-captcha>
+    <div class="form-group text-center m-t-20">
+        <div class="col-xs-12">
+            <button class="btn btn-info btn-block text-uppercase btn-rounded" type="submit" [disabled]="loading">Cambiar Contraseña  <i class="fa fa-spin fa-spinner" *ngIf="loading"></i></button>
+        </div>
+    </div>
+
+    <div class="form-group m-b-0">
+        <div class="col-sm-12 text-center">
+            <a routerLink="/login" class="text-primary m-l-5"><i class="fa fa-key m-r-5"></i> <b>Inicia Sesión Aquí</b></a>
+        </div>
+    </div>
+
+</form>
