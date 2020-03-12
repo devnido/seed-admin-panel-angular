@@ -2,11 +2,11 @@
 
 ### Este proyecto fue creado para utilizar como base en futuros desarrollos que utilicen caracteristicas similares.
 
-Proyecto base que forma parte de otros 2 adicionales, este cógido es el front-end que sirve para levantar una SPA (simple page application) utilizando como fuente de datos los siguientes  proyectos [servidor de autenticación](https://github.com/devnido/seed-auth-api-nodejs) y [servidor de fuente de datos](https://github.com/devnido/seed-resource-api-nodejs) estos 3 permiten levnatar un sistema cliente - servidor.
+Proyecto base que forma parte de otros 2 adicionales para crear un sistema en conjunto. El código del repositorio actual es el front-end que sirve para levantar una SPA (simple page application) utilizando como fuente de datos (back-end) los siguientes proyectos [servidor de autenticación](https://github.com/devnido/seed-auth-api-nodejs) y [servidor de fuente de datos](https://github.com/devnido/seed-resource-api-nodejs) los 3 permiten levantar un sistema cliente - servidor.
 
 ## Descripción
 
-Está desarrollado en Angular versión 9.
+Está desarrollado en [Angular](https://angular.io) versión 9.
 
 Se utilizó [Angular CLI](https://github.com/angular/angular-cli) version 9.0.1.
 
@@ -16,7 +16,7 @@ Se utilizó [Angular CLI](https://github.com/angular/angular-cli) version 9.0.1.
 
 2. Una vez cumplido el punto anterior ejecutar  `ng serve -o`
 
-3. Para utilizar tu propia llave pública en el captcha debes establecer su valor en el archivo environment.ts 
+3. Para utilizar tu propia llave pública de Google reCaptcha debes establecer su valor en el archivo environment.ts 
 
 ## Funcionalidades implementadas 
 
