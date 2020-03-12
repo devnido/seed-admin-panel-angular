@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AuthApiService } from 'src/app/services/api/auth-api.service';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -18,8 +19,12 @@ export class RecoveryComponent implements OnInit, OnDestroy {
     password: string = '';
     confirmPassword: string = '';
     subscription: Subscription;
+    resolvedCaptcha: string;
+    siteApiKeyCaptcha: string = '';
+    loading: boolean = false;
 
     constructor(private router: Router, private activatedRoute: ActivatedRoute, private authApiService: AuthApiService) {
+        this.loadSiteApiKeyCaptcha();
 
         activatedRoute.params.subscribe(params => {
             this.changeToken = params.token;
@@ -41,7 +46,7 @@ export class RecoveryComponent implements OnInit, OnDestroy {
     }
 
     recovery(form: NgForm) {
-
+        this.loading = true;
         if (form.invalid) {
             return;
         }
@@ -51,10 +56,15 @@ export class RecoveryComponent implements OnInit, OnDestroy {
             return;
         }
 
+        if (!this.resolvedCaptcha) {
+            Swal.fire('No soy un robot', 'Debe resolver el captcha para demostrar que no es un robot', 'warning');
+            return;
+        }
+
         this.password = form.value.password;
         this.confirmPassword = form.value.confirmPassword;
 
-        this.subscription = this.authApiService.recovery(this.password, this.confirmPassword, this.changeToken)
+        this.subscription = this.authApiService.recovery(this.password, this.confirmPassword, this.changeToken, this.resolvedCaptcha)
             .subscribe((resp: boolean) => {
                 if (resp) {
 
@@ -65,8 +75,10 @@ export class RecoveryComponent implements OnInit, OnDestroy {
                 } else {
                     console.log(resp);
                 }
+                this.loading = false;
 
             }, (error: any) => {
+                this.loading = false;
                 if (error.status === 422) {
 
                     Swal.fire('Ha ocurrido un error', error.error.content.error.errors[0].msg, 'error');
@@ -76,8 +88,13 @@ export class RecoveryComponent implements OnInit, OnDestroy {
                 }
 
             });
-
-
     }
 
+    resolved(captchaResponse: string) {
+        this.resolvedCaptcha = captchaResponse;
+    }
+    private loadSiteApiKeyCaptcha() {
+        this.siteApiKeyCaptcha = environment.siteApiKeyCaptcha;
+
+    }
 }

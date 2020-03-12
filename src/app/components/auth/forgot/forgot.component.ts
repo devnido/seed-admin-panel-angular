@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AuthApiService } from 'src/app/services/api/auth-api.service';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -17,8 +18,13 @@ export class ForgotComponent implements OnInit, OnDestroy {
 
     subscription: Subscription;
     email: string;
+    resolvedCaptcha: string;
+    siteApiKeyCaptcha: string = '';
+    loading: boolean = false;
 
-    constructor(private router: Router, private authApiService: AuthApiService) { }
+    constructor(private router: Router, private authApiService: AuthApiService) {
+        this.loadSiteApiKeyCaptcha();
+    }
 
     ngOnInit(): void {
 
@@ -32,14 +38,20 @@ export class ForgotComponent implements OnInit, OnDestroy {
     }
 
     forgot(form: NgForm) {
+        this.loading = true;
 
         if (form.invalid) {
             return;
         }
 
+        if (!this.resolvedCaptcha) {
+            Swal.fire('No soy un robot', 'Debe resolver el captcha para demostrar que no es un robot', 'warning');
+            return;
+        }
+
         const email = form.value.email;
 
-        this.subscription = this.authApiService.forgot(email)
+        this.subscription = this.authApiService.forgot(email, this.resolvedCaptcha)
             .subscribe((resp: boolean) => {
                 if (resp) {
 
@@ -52,9 +64,11 @@ export class ForgotComponent implements OnInit, OnDestroy {
                 } else {
                     console.log(resp);
                 }
+                this.loading = false;
 
             }, (error: any) => {
                 if (error.status === 422) {
+                    this.loading = false;
                     Swal.fire('Error al enviar', 'El email ingresado no existe en nuestros registros', 'error');
 
                 } else {
@@ -64,6 +78,14 @@ export class ForgotComponent implements OnInit, OnDestroy {
             });
     }
 
+    resolved(captchaResponse: string) {
+        this.resolvedCaptcha = captchaResponse;
+    }
+
+    private loadSiteApiKeyCaptcha() {
+        this.siteApiKeyCaptcha = environment.siteApiKeyCaptcha;
+
+    }
 
 
 }

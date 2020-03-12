@@ -5,7 +5,8 @@
 export const environment = {
     production: false,
     baseUrlAuthApi: 'http://localhost:3000/api/v1',
-    baseUrlResourcesApi: 'http://localhost:5000/api/v1'
+    baseUrlResourcesApi: 'http://localhost:5000/api/v1',
+    siteApiKeyCaptcha: '6LdSo-AUAAAAALHrW4rifN0PL0zxzrWrDipw9C8Z'
 };
 
 /*

@@ -22,19 +22,16 @@ export class AuthApiService {
         this.loadUserFromStorage();
     }
 
-    register(user: User) {
+    register(user: User, captcha: string) {
 
         const url = this.baseUrlAuth + '/register';
 
         const headers = this.generateIsAuthHeader();
 
-        return this.http.post(url, user, { headers })
+        return this.http.post(url, { ...user, captcha }, { headers })
             .pipe(
                 map((resp: any) => {
-
-
                     if (resp.ok) {
-
                         return true;
                     } else {
                         return false;
@@ -44,13 +41,13 @@ export class AuthApiService {
     }
 
 
-    login(user: User) {
+    login(user: User, captcha: string) {
 
         const url = this.baseUrlAuth + '/login';
 
         const headers = this.generateIsAuthHeader();
 
-        return this.http.post(url, user, { headers })
+        return this.http.post(url, { ...user, captcha }, { headers })
             .pipe(
                 map((resp: any) => {
 
@@ -69,13 +66,13 @@ export class AuthApiService {
     }
 
 
-    forgot(email: string) {
+    forgot(email: string, captcha: string) {
 
         const url = this.baseUrlAuth + '/forgot';
 
         const headers = this.generateIsAuthHeader();
 
-        return this.http.post(url, { email }, { headers })
+        return this.http.post(url, { email, captcha }, { headers })
             .pipe(
                 map((resp: any) => {
 
@@ -89,13 +86,13 @@ export class AuthApiService {
             );
     }
 
-    recovery(password: string, confirmPassword: string, changeToken: string) {
+    recovery(password: string, confirmPassword: string, changeToken: string, captcha: string) {
 
         const url = this.baseUrlAuth + '/recovery/' + changeToken;
 
         const headers = this.generateIsAuthHeader();
 
-        return this.http.post(url, { password, confirmPassword }, { headers })
+        return this.http.post(url, { password, confirmPassword, captcha }, { headers })
             .pipe(
                 map((resp: any) => {
 

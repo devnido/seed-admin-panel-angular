@@ -5,6 +5,7 @@ import { AuthApiService } from 'src/app/services/api/auth-api.service';
 import Swal from 'sweetalert2';
 import { User } from 'src/app/models/user.model';
 import { Subscription } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'app-login',
@@ -16,8 +17,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     email: string;
     rememberMe: boolean = false;
     subscription: Subscription;
+    resolvedCaptcha: string;
+    siteApiKeyCaptcha: string = '';
+    loading: boolean = false;
 
-    constructor(private router: Router, private authApiService: AuthApiService) { }
+    constructor(private router: Router, private authApiService: AuthApiService) {
+        this.loadSiteApiKeyCaptcha();
+    }
 
     ngOnInit(): void {
         this.getRemember();
@@ -30,8 +36,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     login(form: NgForm) {
+        this.loading = true;
 
         if (form.invalid) {
+            return;
+        }
+
+        if (!this.resolvedCaptcha) {
+            Swal.fire('No soy un robot', 'Debe resolver el captcha para demostrar que no es un robot', 'warning');
             return;
         }
 
@@ -41,7 +53,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         this.rememberMe = form.value.rememberMe;
 
-        this.subscription = this.authApiService.login(user)
+        this.subscription = this.authApiService.login(user, this.resolvedCaptcha)
             .subscribe((resp: boolean) => {
                 if (resp) {
 
@@ -52,8 +64,9 @@ export class LoginComponent implements OnInit, OnDestroy {
                 } else {
                     console.log(resp);
                 }
-
+                this.loading = false;
             }, (error: any) => {
+                this.loading = false;
                 if (error.status === 401) {
                     Swal.fire('Error al ingresar', 'Usuario o contraseña ingresados son incorrectos', 'error');
                 } else {
@@ -62,6 +75,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
             });
 
+    }
+
+    resolved(captchaResponse: string) {
+        this.resolvedCaptcha = captchaResponse;
     }
 
     private setRemenber(remember: boolean, email: string) {
@@ -79,6 +96,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (this.email.length > 1) {
             this.rememberMe = true;
         }
+
+    }
+
+    private loadSiteApiKeyCaptcha() {
+        this.siteApiKeyCaptcha = environment.siteApiKeyCaptcha;
 
     }
 

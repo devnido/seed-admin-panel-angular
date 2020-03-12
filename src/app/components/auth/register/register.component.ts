@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthApiService } from 'src/app/services/api/auth-api.service';
 import { User } from 'src/app/models/user.model';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -21,8 +22,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
     confirmPassword: string;
     terms: boolean = false;
     subscription: Subscription;
+    resolvedCaptcha: string;
+    siteApiKeyCaptcha: string = '';
+    loading: boolean = false;
 
-    constructor(private router: Router, private authApiService: AuthApiService) { }
+    constructor(private router: Router, private authApiService: AuthApiService) {
+        this.loadSiteApiKeyCaptcha();
+    }
 
     ngOnInit(): void {
 
@@ -35,7 +41,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     register(form: NgForm) {
-
+        this.loading = true;
 
 
         if (form.invalid) {
@@ -52,6 +58,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
             return;
         }
 
+        if (!this.resolvedCaptcha) {
+            Swal.fire('No soy un robot', 'Debe resolver el captcha para demostrar que no es un robot', 'warning');
+            return;
+        }
+
         const user = new User();
         user.email = form.value.email;
         user.name = form.value.name;
@@ -59,7 +70,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
         user.confirmPassword = form.value.password;
         user.password = form.value.password;
 
-        this.subscription = this.authApiService.register(user)
+
+        this.subscription = this.authApiService.register(user, this.resolvedCaptcha)
             .subscribe((resp: boolean) => {
                 if (resp) {
 
@@ -70,8 +82,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 } else {
                     console.log(resp);
                 }
+                this.loading = false;
 
             }, (error: any) => {
+                this.loading = false;
                 if (error.status === 422) {
                     Swal.fire('Ha ocurrido un error', error.error.content.error.errors[0].msg, 'error');
                 } else {
@@ -79,6 +93,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 }
 
             });
+
+    }
+
+    resolved(captchaResponse: string) {
+        this.resolvedCaptcha = captchaResponse;
+    }
+    private loadSiteApiKeyCaptcha() {
+        this.siteApiKeyCaptcha = environment.siteApiKeyCaptcha;
 
     }
 

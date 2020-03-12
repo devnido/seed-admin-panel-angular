@@ -8,6 +8,8 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
 import { RegisterComponent } from './register/register.component';
 
+import { RecaptchaModule } from 'ng-recaptcha';
+
 
 
 @NgModule({
@@ -21,6 +23,7 @@ import { RegisterComponent } from './register/register.component';
     imports: [
         CommonModule,
         FormsModule,
+        RecaptchaModule,
         AuthRoutingModule
     ]
 })

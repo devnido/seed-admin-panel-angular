@@ -21,7 +21,7 @@ const routes: Routes = [
                 path: 'forgot', component: ForgotComponent, data: { titulo: 'Olvidó Contraseña' }
             },
             {
-                path: 'recovery', component: RecoveryComponent, data: { titulo: 'Recuperar Contraseña' }
+                path: 'recovery/:token', component: RecoveryComponent, data: { titulo: 'Recuperar Contraseña' }
             },
             {
                 path: '', redirectTo: '/auth/login', pathMatch: 'full'
