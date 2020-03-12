@@ -14,7 +14,7 @@ Se utilizó [Angular CLI](https://github.com/angular/angular-cli) version 9.0.1.
 
 1. Para ejecutar este código es necesario ejecutar previamente los otros dos proyectos back-end mencionados anteriormente ([servidor de autenticación](https://github.com/devnido/seed-auth-api-nodejs) y [servidor de fuente de datos](https://github.com/devnido/seed-resource-api-nodejs)). 
 
-2. Una vez cumplido el punto anterior ejecutar  `ng serve -o`
+2. Una vez cumplido el punto anterior ejecutar  `npm install` y luego `ng serve -o`
 
 3. Para utilizar tu propia llave pública de Google reCaptcha debes establecer su valor en el archivo environment.ts 
 
